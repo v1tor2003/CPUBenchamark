@@ -24,14 +24,18 @@ async function showSystemInfo() {
     console.log(`Running on ${os.platform}, ${os.arch}.`);
 
     const cpuData = await si.cpu();
-    console.log(`CPU: ${cpuData.brand} ${cpuData.vendor} CPU at ${cpuData.speedMax}Ghz, ${cpuData.physicalCores}c/${cpuData.cores}t`);
+    console.log(`CPU: ${formatStr(cpuData.brand + ' ' + cpuData.vendor, '','unknown processor') } at ${formatStr(cpuData.speed,'Ghz', 'unknown speed')}, ${formatStr(cpuData.physicalCores, 'c','unknown cores count')}/${formatStr(cpuData.cores, 't','unknown logical cores count')}`);
 
     const memData = await si.memLayout();
     for (let i = 0; i < memData.length; i++)
-      console.log(`Memory [slot${i}]: ${memData[i].manufacturer} at ${memData[i].clockSpeed}Mhz, ${memData[i].size}bytes in ${memData[i].type}`);
+      console.log(`Memory [slot${i}]: ${formatStr(memData[i].manufacturer, '','unknown memory')} at ${formatStr(memData[i].clockSpeed, 'Mhz', 'unknown speed')}, ${formatStr(memData[i].size, 'bytes', 'unknown size')} in ${formatStr(memData[i].type, '', 'unknown type')}`);
   } catch (error) {
     console.error('Error getting system information:', error);
   }
+}
+
+function formatStr(str, strToConcat,errorMsg){
+  return str ? str+strToConcat : errorMsg
 }
 
 async function main() {

@@ -24,7 +24,7 @@ async function showSystemInfo() {
     console.log(`Running on ${os.platform}, ${os.arch}.`);
 
     const cpuData = await si.cpu();
-    console.log(`CPU: ${formatStr(cpuData.brand + ' ' + cpuData.vendor, '','unknown processor') } at ${formatStr(cpuData.speed,'Ghz', 'unknown speed')}, ${formatStr(cpuData.physicalCores, 'c','unknown cores count')}/${formatStr(cpuData.cores, 't','unknown logical cores count')}`);
+    console.log(`CPU: ${formatStr(cpuData.manufacturer, '', 'unknown brand')} ${formatStr(cpuData.brand, '','unknown processor') } at ${formatStr(cpuData.speed,'Ghz', 'unknown speed')}, ${formatStr(cpuData.physicalCores, 'c','unknown cores count')}/${formatStr(cpuData.cores, 't','unknown logical cores count')}`);
 
     const memData = await si.memLayout();
     for (let i = 0; i < memData.length; i++)

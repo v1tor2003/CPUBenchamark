@@ -36,11 +36,20 @@ function formatStr(str, strToConcat,errorMsg){
   return str ? str+strToConcat : errorMsg
 }
 
+function getToday(){
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
 async function main() {
   if (isMainThread) {
     const numThreads = os.cpus().length; // Number of CPU threads
     const pointsPerThread = 1e9; // Defines the workload to perform
-    console.log(`Benchmark started at ${new Date().toLocaleTimeString()}`)
+    console.log(`Benchmark started at ${new Date().toLocaleTimeString()}, ${getToday()}`)
     await showSystemInfo();
 
     const workers = [];

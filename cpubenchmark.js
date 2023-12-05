@@ -1,6 +1,11 @@
-const os = require("os");
+/*const os = require("os");
 const si = require("systeminformation");
 const { Worker, isMainThread, parentPort, workerData } = require('worker_threads');
+*/
+
+import os from 'os'
+import si from 'systeminformation'
+import {Worker, isMainThread, parentPort, workerData} from 'worker_threads'
 
 function runBenchmark(load) {
   const startTime = performance.now();
@@ -24,12 +29,10 @@ async function showSystemInfo() {
     console.log(`Running on ${os.platform}, ${os.arch}.`);
 
     const cpuData = await si.cpu();
-    console.log(`CPU: ${formatStr(cpuData.manufacturer, '', 'unknown brand')} ${formatStr(cpuData.brand, '','unknown processor') } at ${formatStr(cpuData.speed,'Ghz', 'unknown speed')}, ${formatStr(cpuData.physicalCores, 'c','unknown cores count')}/${formatStr(cpuData.cores, 't','unknown logical cores count')}`);
 
-    const memData = await si.memLayout();
-    for (let i = 0; i < memData.length; i++)
-      console.log(`Memory [slot${i}]: ${formatStr(memData[i].manufacturer, '','unknown memory')} at ${formatStr(memData[i].clockSpeed, 'Mhz', 'unknown speed')}, ${formatStr(memData[i].size, 'bytes', 'unknown size')} in ${formatStr(memData[i].type, '', 'unknown type')}`);
-  } catch (error) {
+    console.log(`CPU: { manufacturer: ${formatStr(cpuData.manufacturer, '', 'unknown manufacturer')}, family: ${formatStr(cpuData.family, '', 'unkown family')},  model: ${formatStr(cpuData.brand, '','unknown processor')}, base speed: ${formatStr(cpuData.speedMin, '', 'unkown min speed')}GHz, up to: ${formatStr(cpuData.speedMax, '', 'unkown max speed')}GHz, ${formatStr(cpuData.physicalCores, 'c','unknown cores count')}/${formatStr(cpuData.cores, 't','unknown logical cores count')}, socket: ${formatStr(cpuData.socket, '', 'unknown socket')}}`)
+
+    } catch (error) {
     console.error('Error getting system information:', error);
   }
 }
@@ -49,7 +52,7 @@ async function main() {
     const results = [];
 
     for (let i = 0; i < numThreads; i++) {
-      const worker = new Worker(__filename, {
+      const worker = new Worker('./cpubenchmark.js', {
         workerData: { points: pointsPerThread },
       });
 

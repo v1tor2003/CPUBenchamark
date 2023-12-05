@@ -1,8 +1,3 @@
-/*const os = require("os");
-const si = require("systeminformation");
-const { Worker, isMainThread, parentPort, workerData } = require('worker_threads');
-*/
-
 import os from 'os'
 import si from 'systeminformation'
 import {Worker, isMainThread, parentPort, workerData} from 'worker_threads'
@@ -30,7 +25,7 @@ async function showSystemInfo() {
 
     const cpuData = await si.cpu();
 
-    console.log(`CPU: { manufacturer: ${formatStr(cpuData.manufacturer, '', 'unknown manufacturer')}, family: ${formatStr(cpuData.family, '', 'unkown family')},  model: ${formatStr(cpuData.brand, '','unknown processor')}, base speed: ${formatStr(cpuData.speedMin, '', 'unkown min speed')}GHz, up to: ${formatStr(cpuData.speedMax, '', 'unkown max speed')}GHz, ${formatStr(cpuData.physicalCores, 'c','unknown cores count')}/${formatStr(cpuData.cores, 't','unknown logical cores count')}, socket: ${formatStr(cpuData.socket, '', 'unknown socket')}}`)
+    console.log(`CPU: { manufacturer: ${formatStr(cpuData.manufacturer, '', 'unknown manufacturer')}, family: ${formatStr(cpuData.family, '', 'unkown family')},  model: ${formatStr(cpuData.brand, '','unknown processor')}, base speed: ${formatStr(cpuData.speedMin, '', 'unkown min speed')}GHz, up to: ${formatStr(cpuData.speedMax, '', 'unkown max speed')}GHz, ${formatStr(cpuData.physicalCores, 'c','unknown cores count')}/${formatStr(cpuData.cores, 't','unknown logical cores count')}, socket: ${formatStr(cpuData.socket, '', 'unknown socket')} }`)
 
     } catch (error) {
     console.error('Error getting system information:', error);
